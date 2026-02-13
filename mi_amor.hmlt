@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuestra Historia 💖</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    text-align: center;
+    color: white;
+    overflow-x: hidden;
+}
+
+h1 {
+    margin-top: 20px;
+    font-size: 2.3em;
+}
+
+/* Mensaje */
+.mensaje {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    font-size: 1.2em;
+    line-height: 1.6;
+}
+
+/* Contador */
+.contador {
+    font-size: 1.3em;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+/* Canción */
+.cancion {
+    margin-top: 15px;
+    font-style: italic;
+    font-size: 1.1em;
+}
+
+/* Botón gigante */
+#botonMusica {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    color: #ff4f81;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.5em;
+    padding: 20px 40px;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 999;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* Foto central que cambia */
+#fotoGrande {
+    width: 80%;
+    max-width: 500px;
+    border-radius: 20px;
+    margin-top: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    transition: opacity 1s ease-in-out;
+}
+
+/* Corazones flotando */
+.corazon {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    background: red;
+    transform: rotate(45deg);
+    left: 50%;
+    bottom: -50px;
+    animation: flotar 5s linear infinite;
+    opacity: 0.8;
+    z-index: 1000;
+}
+
+.corazon::before,
+.corazon::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: red;
+    border-radius: 50%;
+}
+
+.corazon::before {
+    top: -15px;
+    left: 0;
+}
+
+.corazon::after {
+    left: 15px;
+    top: 0;
+}
+
+@keyframes flotar {
+    0% { transform: translateX(0) translateY(0) rotate(45deg); opacity:0.8; }
+    50% { opacity:1; }
+    100% { transform: translateX(-200px) translateY(-800px) rotate(45deg); opacity:0; }
+}
+
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+</style>
+</head>
+
+<body>
+
+<h1>✨ Feliz Día de San Valentín ✨</h1>
+
+<div class="mensaje">
+Feliz día de San Valentín a la mujer que ha hecho que mis días sean más hermosos.  
+Por cada momento a tu lado siento que no quiero que termine el día.  
+Mi amor por ti se intensifica con cada sonrisa que veo en ti;  
+solo con tu presencia haces que mi día sea especial.  
+
+Te amo demasiado, mi chiquita hermosa. 💖
+</div>
+
+<div class="contador">
+Desde el 25 de febrero de 2025 a las 6:05 a.m. ❤️  
+<br><br>
+<span id="tiempo"></span> y contando...
+</div>
+
+<div class="cancion">
+🎶 Nuestra canción: "Amárrame" - Mon Laferte 🎶
+</div>
+
+<!-- Botón gigante central para reproducir música -->
+<button id="botonMusica" onclick="reproducirMusica()">
+💖 Toca aquí para escuchar nuestra canción 💖
+</button>
+
+<!-- Foto central que cambia automáticamente -->
+<img id="fotoGrande" src="foto1.jpg">
+
+<footer>
+Siempre tú y yo 💌
+</footer>
+
+<audio id="musica" loop autoplay>
+    <source src="amarrame.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// ===== Contador =====
+const inicio = new Date("2025-02-25T06:05:00");
+
+function actualizarContador() {
+    const ahora = new Date();
+    const diferencia = ahora - inicio;
+
+    const segundos = Math.floor(diferencia / 1000);
+    const dias = Math.floor(segundos / (3600*24));
+    const horas = Math.floor((segundos % (3600*24)) / 3600);
+    const minutos = Math.floor((segundos % 3600) / 60);
+    const seg = segundos % 60;
+
+    document.getElementById("tiempo").innerHTML =
+        dias + " días, " +
+        horas + " horas, " +
+        minutos + " minutos, " +
+        seg + " segundos";
+}
+
+setInterval(actualizarContador, 1000);
+
+// ===== Reproducir música y ocultar botón =====
+function reproducirMusica() {
+    const audio = document.getElementById("musica");
+    audio.play();
+    document.getElementById("botonMusica").style.display = "none";
+}
+
+// ===== Galería automática =====
+const fotos = ["foto1.jpg","foto2.jpg","foto3.jpg","foto4.jpg","foto5.jpg","foto6.jpg"];
+let index = 0;
+setInterval(() => {
+    index = (index + 1) % fotos.length;
+    const img = document.getElementById("fotoGrande");
+    img.style.opacity = 0;
+    setTimeout(() => {
+        img.src = fotos[index];
+        img.style.opacity = 1;
+    }, 500);
+}, 3000);
+
+// ===== Corazones flotando =====
+function crearCorazon() {
+    const corazon = document.createElement("div");
+    corazon.classList.add("corazon");
+    corazon.style.left = Math.random()*100 + "vw";
+    corazon.style.width = 20 + Math.random()*20 + "px";
+    corazon.style.height = corazon.style.width;
+    corazon.style.animationDuration = 4 + Math.random()*3 + "s";
+    document.body.appendChild(corazon);
+    setTimeout(() => corazon.remove(), 7000);
+}
+
+setInterval(crearCorazon, 500);
+</script>
+
+</body>
+</html>
